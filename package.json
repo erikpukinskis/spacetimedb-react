@@ -1,0 +1,52 @@
+{
+  "name": "spacetimedb-react",
+  "license": "UNLICENSED",
+  "main": "./dist/lib.umd.js",
+  "module": "./dist/lib.es.js",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/lib.es.js",
+      "require": "./dist/lib.umd.js"
+    }
+  },
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^16.2.0",
+    "@types/node": "16.18.8",
+    "@types/react": "^19.0.12",
+    "@typescript-eslint/eslint-plugin": "5.46.0",
+    "@typescript-eslint/parser": "^8.28.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "eslint": "8.29.0",
+    "eslint-import-resolver-typescript": "^4.2.4",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-react": "7.31.11",
+    "jsdom": "^26.0.0",
+    "prettier": "2.8.1",
+    "tsc-alias": "^1.8.11",
+    "typescript": "4.9.4",
+    "vite": "^6.2.3",
+    "vitest": "^3.0.9"
+  },
+  "scripts": {
+    "all": "yarn && yarn build && yarn fix && yarn check:types && yarn test && echo `echo 8J+OiSBEaWQgYWxs | base64 -d`",
+    "build": "rm -rf dist/* && yarn build:lib && yarn build:types",
+    "build:lib": "vite build --config vite.lib.config.js --mode development",
+    "build:types": "tsc --declaration --emitDeclarationOnly -p tsconfig.dist.json --skipLibCheck && tsc-alias -p tsconfig.json && mv dist/index.d.ts dist/lib.umd.d.ts",
+    "check:format": "prettier --check --ignore-path .gitignore .",
+    "check:lint": "eslint --ignore-path .gitignore --no-error-on-unmatched-pattern .; if [ $? -eq 0 ]; then echo 8J+OiSBObyBsaW50IGluIHRoaXMgY29kZSEKCg== | base64 -d; else exit 1; fi",
+    "check:types": "tsc --noEmit -p tsconfig.json; if [ $? -eq 0 ]; then echo 8J+OiSBUeXBlcyBhcmUgZ29vZCEKCg== | base64 -d; else exit 1; fi",
+    "confgen": "npx confgen@latest @lib @package dist:lib --name SpacetimedbReact react typescript vite vitest git yarn codespaces eslint prettier",
+    "fix": "yarn fix:lint && yarn fix:format",
+    "fix:format": "prettier --write --ignore-path .gitignore .",
+    "fix:lint": "eslint --ignore-path .gitignore --no-error-on-unmatched-pattern . --fix; if [ $? -eq 0 ]; then echo 8J+OiSBObyBsaW50IGluIHRoaXMgY29kZSEKCg== | base64 -d; else exit 1; fi",
+    "test": "vitest run --config vite.test.config.js",
+    "watch:test": "vitest watch --config vite.test.config.js"
+  }
+}
